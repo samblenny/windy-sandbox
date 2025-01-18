@@ -1,0 +1,11 @@
+# See docs at:
+# https://docs.zephyrproject.org/latest/develop/modules.html#module-yaml-file-description
+
+name: windy-sandbox
+build:
+  cmake: .
+  snippet_root: .
+  kconfig: Kconfig
+  settings:
+    board_root: .
+    dts_root: .
