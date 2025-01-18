@@ -17,7 +17,7 @@ When I use that, cmake sets `OPENOCD:FILEPATH=/usr/bin/openocd` in
 `target/rp2040.cfg` in `/usr/share/openocd/scripts` with no trouble.
 
 If I don't specify `-DOPENOCD=...`, then cmake follows the stuff in
-`boards/raspberrypi/rpi_pico/board.cmake` which defaults to cmsiss-dap for
+`boards/raspberrypi/rpi_pico/board.cmake` which defaults to cmsis-dap for
 `RPI_PICO_DEBUG_ADAPTER` but non-helpfully selects the openocd binary to be
 `zephyr-sdk-0.17.0/sysroots/x86_64-pokysdk-linux/usr/bin/openocd`. That build
 of openocd doesn't know how to find a useable `target/rp2040.cfg`.
