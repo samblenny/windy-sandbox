@@ -1,8 +1,72 @@
 # windy-sandbox
 
-**WORK IN PROGRESS (ALPHA)**
+**WORK IN PROGRESS**
 
 Zephyr experiments
+
+
+## Make targets
+
+To avoid typing long repetitive commandline arguments, I'm using a Makefile:
+
+| Make Target    | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| build\_pico\_w | west build for Pi Pico W with openocd and Pi Debug Probe |
+| menuconfig     | west build -t menuconfig                                 |
+| flash          | west flash                                               |
+| uart           | connect to Pico W uart console with Pi Debug Probe       |
+| clean          | remove build directory                                   |
+
+
+## Zephyr Shell Config
+
+The Zephyr Shell gets more interesting if you turn on Networking, IPv4, DHCP
+Client, Network Connection Manager, etc.
+
+These Kconfig options are useful for adding to prj.conf:
+
+```
+# Network stack
+CONFIG_NETWORKING=y
+CONFIG_NET_HOSTNAME_ENABLE=y
+CONFIG_NET_IPV6=n
+CONFIG_NET_IPV4=y
+CONFIG_NET_TCP=y
+CONFIG_NET_DHCPV4=y
+
+# Wifi support (some of this is also enabled by wifi shell)
+CONFIG_NET_CONNECTION_MANAGER=y
+CONFIG_WIFI=y
+CONFIG_WIFI_NM=y
+
+# Shell Extras
+CONFIG_NET_SHELL=y
+CONFIG_NET_L2_WIFI_SHELL=y
+CONFIG_NET_MGMT_EVENT_MONITOR=y
+CONFIG_NET_MGMT_EVENT_QUEUE_SIZE=10
+```
+
+
+## Zephyr Shell Commands
+
+These Zephyr Shell commands are useful for exploring the Zephyr wifi and
+networking:
+
+```
+net events on
+wifi connect -s "YOUR_SSID" -k 1 -p "YOUR_WPA2_PSK_PASSPHRASE"
+net iface
+net ipv4
+net cm status
+net ping 127.0.0.1
+net ping 192.168.0.1
+net cm down if wlan0
+net cm up if wlan0
+net iface down 1
+net iface up 1
+wifi disconnect
+net events off
+```
 
 
 ## Misc Notes
