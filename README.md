@@ -9,13 +9,58 @@ Zephyr experiments
 
 To avoid typing long repetitive commandline arguments, I'm using a Makefile:
 
-| Make Target    | Description                                              |
-| -------------- | -------------------------------------------------------- |
-| build\_pico\_w | west build for Pi Pico W with openocd and Pi Debug Probe |
-| menuconfig     | west build -t menuconfig                                 |
-| flash          | west flash                                               |
-| uart           | connect to Pico W uart console with Pi Debug Probe       |
-| clean          | remove build directory                                   |
+| Make Target  | Description                                              |
+| ------------ | -------------------------------------------------------- |
+| pico\_w      | west build Zephyr Shell for Pi Pico W with openocd and Pi Debug Probe |
+| pico\_w\_mp  | west build MicriPython for Pi Pico W with openocd and Pi Debug Probe |
+| menuconfig   | west build -t menuconfig                                 |
+| flash        | west flash                                               |
+| uart         | connect to Pico W uart console with Pi Debug Probe       |
+| clean        | remove build directory                                   |
+
+
+## MicroPython Submodule
+
+The MicroPython build depends on submodules. The first time you clone this
+repo, do a
+
+```
+git submodule update --init
+```
+
+to get the MicroPython submodule.
+
+Also, several config patches are needed to get the MicroPython Zephyr port to
+build with Zephyr 4.0...
+
+In vendor/micropython/ports/zephyr/mpconfigport.h:
+
+1. Comment out the `#ifdef CONFIG_THREAD_CUSTOM_DATA` block with an `#if 0`
+   to fix a build error
+
+2. To fix the west build error about:
+   `relocation truncated to fit: R_ARM_THM_JUMP11 against symbol 'nlr_push_tail'`,
+    add a `#define MICROPY_NLR_THUMB_USE_LONG_JUMP (1)`. The problem may be
+    happening on Pi Pico W because Cortex M0+ B instruction not wide enough
+    and it doesn't have a B.W. Apparently BL works though. See also:
+    https://github.com/adafruit/circuitpython/commit/94b4867fbe576b5523b8bbc0090e1c94ddc8ca34
+
+In vendor/micropython/ports/zephyr/prj.conf:
+
+1. Add this stuff to get more debug info if the kernel hard faults:
+
+   ```
+   CONFIG_DEBUG_OPTIMIZATIONS=y
+   CONFIG_LOG=y
+   CONFIG_LOG_PRINTK=y
+   CONFIG_THREAD_NAME=y
+   ```
+
+2. Set `CONFIG_FPU=n` to fix a Cortex M0+ build error
+
+3. Comment out all the networking stuff to fix a zephyr hard fault
+
+4. Comment out the `CONFIG_MICROPY_VFS_*` lines to avoid build errors
 
 
 ## Zephyr Shell Config
