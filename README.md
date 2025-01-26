@@ -54,6 +54,7 @@ networking:
 
 ```
 net events on
+wifi scan
 wifi connect -s "YOUR_SSID" -k 1 -p "YOUR_WPA2_PSK_PASSPHRASE"
 net iface
 net ipv4
