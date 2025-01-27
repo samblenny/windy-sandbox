@@ -12,7 +12,7 @@ To avoid typing long repetitive commandline arguments, I'm using a Makefile:
 | Make Target  | Description                                              |
 | ------------ | -------------------------------------------------------- |
 | pico\_w      | west build Zephyr Shell for Pi Pico W with openocd and Pi Debug Probe |
-| pico\_w\_mp  | west build MicriPython for Pi Pico W with openocd and Pi Debug Probe |
+| pico\_w\_mp  | west build MicroPython for Pi Pico W with openocd and Pi Debug Probe |
 | menuconfig   | west build -t menuconfig                                 |
 | flash        | west flash                                               |
 | uart         | connect to Pico W uart console with Pi Debug Probe       |
