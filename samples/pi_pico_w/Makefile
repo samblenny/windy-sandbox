@@ -1,7 +1,9 @@
+# SPDX-License-Identifier: Apache-2.0 OR MIT
+# SPDX-FileCopyrightText: Copyright 2025 Sam Blenny
 
 PICO_W_BOARD=-b rpi_pico/rp2040/w
 PICO_W_EXTRAS=-DOPENOCD=$$(which openocd)
-MICROPYTHON_DIR=vendor/micropython/ports/zephyr
+MICROPYTHON_DIR=../../vendor/micropython/ports/zephyr
 
 # Build Zephyr shell for Raspberry Pi Pico W with OpenOCD and Pi Debug Probe
 pico_w:
