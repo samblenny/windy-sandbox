@@ -1,3 +1,5 @@
-# SPDX-License-Identifier: Apache-2.0 OR MIT
-# SPDX-FileCopyrightText: Copyright 2025 Sam Blenny
-
+board:
+  name: feather_rp2350
+  vendor: adafruit
+  socs:
+  - name: rp2350a

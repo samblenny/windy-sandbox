@@ -1,3 +1,20 @@
-# SPDX-License-Identifier: Apache-2.0 OR MIT
-# SPDX-FileCopyrightText: Copyright 2025 Sam Blenny
+/* SPDX-License-Identifier: Apache-2.0 OR MIT */
+/* SPDX-FileCopyrightText: Copyright 2025 Sam Blenny */
 
+/dts-v1/;
+
+/* These includes are files from zephyr/dts/arm/raspberrypi/rpi_pico/ which
+ * pull in a whole tree of their own includes. Most of the interesting stuff
+ * is in raspberrypi/rpi_pico/rp2350.dtsi
+ */
+#include <raspberrypi/rpi_pico/rp2350a.dtsi>
+#include <raspberrypi/rpi_pico/m33.dtsi>
+
+/ {
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,sram = &sram0;
+	};
+
+};
